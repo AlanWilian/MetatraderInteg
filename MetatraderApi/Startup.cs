@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using MetatraderApi.Repository;
+using MetatraderApi.Helpers;
 
 namespace MetatraderApi
 {
@@ -30,6 +31,7 @@ namespace MetatraderApi
 
             services.AddAutoMapper(typeof(TraderRepository).Assembly);
             services.AddScoped<ITraderRepository, TraderRepository>();
+            services.AddScoped<ICalculate, Calculate>();
 
         }
 

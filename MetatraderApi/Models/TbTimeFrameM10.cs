@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MetatraderApi.Models
 {
-    public class MetaTraderInfo
+    public class TbTimeFrameM10
     {
-
-
         public int Id { get; set; }
         public double Open { get; set; }
         public double High { get; set; }

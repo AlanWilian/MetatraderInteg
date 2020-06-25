@@ -8,7 +8,9 @@ namespace MetatraderApi.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<UseForGetDataDto, MetaTraderInfo>();
+            CreateMap<UseForGetDataDto, TbTimeFrameM5>();
+
+           CreateMap<TbTimeFrameM5, UseToCalculateM10Dto>();
         }
     }
 }

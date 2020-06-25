@@ -21,18 +21,17 @@ namespace MetatraderApi.Repository
             _context.Add(entity);
         }
 
-        public void Delete<T>(T entity) where T : class
+        public async Task<List<TbTimeFrameM5>> GetDataM5(string symbol)
         {
-            _context.Remove(entity);
-        }
-            
-        public async Task<IEnumerable<MetaTraderInfo>> GetCurrency(string symbol, int timeFrame)
-        {
-            var result = await _context.MetaTraderInfo.Where(m => m.Symbol == symbol).ToListAsync();
-            return result;
+            return await _context.TbTimeFrameM5
+                 .Where(m => m.Symbol == symbol)
+                 .OrderByDescending(d => d.Date)
+                 .Skip(1)
+                 .Take(2)
+                 .ToListAsync();
         }
 
-        public async Task<bool> SaveAll()
+        public async Task<bool> SaveAll()   
         {
             return await _context.SaveChangesAsync() > 0;
         }

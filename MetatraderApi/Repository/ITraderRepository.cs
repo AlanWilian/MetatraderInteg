@@ -9,8 +9,8 @@ namespace MetatraderApi.Repository
     {
 
         void Add<T>(T entity) where T : class;
-        void Delete<T>(T entity) where T : class;
+        Task<List<TbTimeFrameM5>> GetDataM5(string symbol);
         Task<bool> SaveAll();
-        Task<IEnumerable<MetaTraderInfo>> GetCurrency(string symbol, int timeFrame);
+
     }
 }
