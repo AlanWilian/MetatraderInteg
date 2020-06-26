@@ -1,49 +1,50 @@
-﻿using MetatraderApi.Data;
-using MetatraderApi.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using MetatraderApi.Dto;
+using MetatraderApi.Repository;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MetatraderApi.Helpers
 {
     public class Calculate : ICalculate
     {
 
-        private readonly DataContext _context;
-        public Calculate(DataContext context)
+        private readonly ITraderRepository _repo;
+        public Calculate(ITraderRepository repo)
         {
-            _context = context;
+            _repo = repo;
         }
 
 
-        public async Task<double> CalcMovingAverage(string symbol, int period)
+        public async Task<UseToCalculateM10Dto> CalculateTimeFrameM10(string symbol)
         {
-            return await _context.TbTimeFrameM5
-                .Where(m => m.Symbol == symbol)
-                .OrderByDescending(d => d.Date)
-                .Select(c => c.Close)
-                .Take(period)
-                .AverageAsync();
-        }
+            UseToCalculateM10Dto data = new UseToCalculateM10Dto();
+            var result = await _repo.GetDataM5(symbol);
+            //if (result.Count > 1)
+            //{
 
-        public async Task<double> FindHighestPrice(string symbol, int period)
-        {
-            return await _context.TbTimeFrameM5
-                 .Where(m => m.Symbol == symbol)
-                 .OrderByDescending(d => d.Date)
-                 .Take(period)
-                 .MaxAsync(p => p.High);                 
+                //var close = (from i in result
+                //             let max = result.Max(d => d.Date)
+                //             where i.Date == max
+                //             select new { closure = i.Close }).ToList();
 
-        }
+                //var open = (from i in result
+                //            let min = result.Min(d => d.Date)
+                //            where i.Date == min
+                //            select new { open = i.Open }).ToList();
 
-        public async Task<double> FindLowestPrice(string symbol, int period)
-        {
-            return await _context.TbTimeFrameM5
-                .Where(m => m.Symbol == symbol)
-                .OrderByDescending(d => d.Date)
-                .Take(period)
-                .MinAsync(p => p.Low);
+
+                data = new UseToCalculateM10Dto
+                {
+                    Open = result[0].Open,
+                    High = result.Max(h => h.High),
+                    Low = result.Min(l => l.Low),
+                    Close = result[1].Close,
+                    Date = result.Max(d => d.Date),
+                    Symbol = symbol
+                };
+            //}
+            return data;
         }
     }
 }

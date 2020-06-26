@@ -10,7 +10,11 @@ namespace MetatraderApi.Helpers
         {
             CreateMap<UseForGetDataDto, TbTimeFrameM5>();
 
-           CreateMap<TbTimeFrameM5, UseToCalculateM10Dto>();
+            CreateMap<UseToCalculateM10Dto ,TbTimeFrameM10>();
+
+            CreateMap<UseToSaveMovingAverangeDto, MovingAverage>();
+
+            CreateMap<UseToSavePriceDto, PriceIndicator>();
         }
     }
 }
