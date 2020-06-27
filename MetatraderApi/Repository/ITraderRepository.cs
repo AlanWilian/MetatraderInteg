@@ -11,12 +11,12 @@ namespace MetatraderApi.Repository
 
         void Add<T>(T entity) where T : class;
         Task<bool> SaveAll();
-        Task<List<TbTimeFrameM5>> GetDataM5(string symbol);
+        Task<IList<TbTimeFrameM5>> GetDataM5(string symbol);
         Task<double> CalcMovingAverage(string symbol, int period);
         Task<double> FindHighestPrice(string symbol, int period);
         Task<double> FindLowestPrice(string symbol, int period);
-        Task<List<TbTimeFrameM5>> GetCandles(string symbol, DateTime start, DateTime end);
-        Task<List<MovingAverage>> GetMovingAverage(string symbol);
+        Task<IList<TbTimeFrameM5>> GetCandles(string symbol, DateTime start, DateTime end);
+        Task<IList<MovingAverage>> GetMovingAverage(string symbol);
 
     }
 }

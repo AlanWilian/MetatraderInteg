@@ -21,7 +21,7 @@ namespace MetatraderApi.Repository
             _context.Add(entity);
         }
 
-        public async Task<List<TbTimeFrameM5>> GetDataM5(string symbol)
+        public async Task<IList<TbTimeFrameM5>> GetDataM5(string symbol)
         {
             return await _context.TbTimeFrameM5
                  .Where(m => m.Symbol == symbol)
@@ -64,14 +64,14 @@ namespace MetatraderApi.Repository
                 .MinAsync(p => p.Low);
         }
 
-        public async Task<List<TbTimeFrameM5>> GetCandles(string symbol, DateTime start, DateTime end)
+        public async Task<IList<TbTimeFrameM5>> GetCandles(string symbol, DateTime start, DateTime end)
         {
             return await _context.TbTimeFrameM5
                  .Where(m => m.Symbol == symbol && m.Date >= start && m.Date <= end)
                  .ToListAsync();
         }
 
-        public async Task<List<MovingAverage>> GetMovingAverage(string symbol)
+        public async Task<IList<MovingAverage>> GetMovingAverage(string symbol)
         {
             return await _context.TbMovingAverage
                  .Where(m => m.Symbol == symbol)
