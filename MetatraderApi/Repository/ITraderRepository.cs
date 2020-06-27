@@ -1,5 +1,6 @@
 ﻿
 using MetatraderApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace MetatraderApi.Repository
         Task<double> CalcMovingAverage(string symbol, int period);
         Task<double> FindHighestPrice(string symbol, int period);
         Task<double> FindLowestPrice(string symbol, int period);
-        Task<List<TbTimeFrameM5>> GetCandles(string symbol);
+        Task<List<TbTimeFrameM5>> GetCandles(string symbol, DateTime start, DateTime end);
         Task<List<MovingAverage>> GetMovingAverage(string symbol);
 
     }

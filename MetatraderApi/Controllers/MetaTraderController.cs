@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using MetatraderApi.Data;
+using System;
 
 namespace MetatraderApi.Controllers
 {
@@ -78,9 +79,9 @@ namespace MetatraderApi.Controllers
                 Value = result,
                 Symbol = symbol,
                 Period = period
-            };
+        };
 
-            var movingAverange = _mapper.Map<UseToSaveMovingAverangeDto>(dataSaveMovingAverange);
+            var movingAverange = _mapper.Map<MovingAverage>(dataSaveMovingAverange);
 
             _repo.Add(movingAverange);
 
@@ -115,17 +116,17 @@ namespace MetatraderApi.Controllers
         }
 
 
-        [HttpPost("LowestPrice/{symbol}/{period}")]
+        [HttpGet("LowestPrice/{symbol}/{period}")]
         public async Task<IActionResult> LowestPrice(string symbol, int period)
         {
             var result = await _repo.FindLowestPrice(symbol, period);
 
             UseToSavePriceDto dataSavePrice = new UseToSavePriceDto()
             {
-                Value = result,
+                Value = result, 
                 Symbol = symbol,
                 Period = period,
-                HighOrLow = "Highest"
+                HighOrLow = "Lower"
             };
 
             var lowestPrice = _mapper.Map<PriceIndicator>(dataSavePrice);
@@ -141,9 +142,9 @@ namespace MetatraderApi.Controllers
 
 
         [HttpGet("GetCandles/{symbol}/{period}")]
-        public async Task<IActionResult> GetCandles(string symbol, int period)
+        public async Task<IActionResult> GetCandles(string symbol, DateTime start, DateTime end)
         {
-            var candles = await _repo.GetCandles(symbol);
+            var candles = await _repo.GetCandles(symbol, start, end);
 
             if (candles.Any())
                 return Ok(candles);
@@ -162,5 +163,6 @@ namespace MetatraderApi.Controllers
 
             return BadRequest("there are no idicator");
         }
+
     }
 }

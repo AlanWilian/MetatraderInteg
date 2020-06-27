@@ -11,6 +11,8 @@ namespace MetatraderApi.Models
         public double Value { get; set; }
         public string Symbol { get; set; }
         public int Period { get; set; }
-        public DateTime DateInput { get; set; }
+        public DateTime DateInput { get; set; }      
+
+
     }
 }
